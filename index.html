@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Página de Cadastro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <link rel="stylesheet" href="estilos/style.css">
+    <link rel="stylesheet" href="estilos/media-query.css">
+</head>
+
+<body>
+    <main>
+        <section id="cadastro">
+            <div id="imagem"></div>
+            <div id="formulario">
+                <h1>Cadastro</h1>
+                <p>Crie sua conta preenchendo os campos abaixo.</p>
+
+                <form action="" method="post" autocomplete="on">
+
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" name="nome" id="nome" placeholder="Ex: João Silva" required maxlength="50">
+
+                    <label for="email">E-mail</label>
+                    <input type="email" name="email" id="email" placeholder="Digite seu e-mail" required maxlength="50">
+
+                    <label for="senha">Senha</label>
+                    <div class="input-senha">
+                        <input type="password" name="senha" id="senha" placeholder="Crie uma senha" required minlength="8">
+                    </div>
+
+                    <label for="confirmar">Confirmar Senha</label>
+                    <div class="input-senha">
+                        <input type="password" name="confirmar" id="confirmar" placeholder="Repita sua senha" required minlength="8">
+                    </div>
+
+                    <input type="submit" value="Criar Conta">
+
+                    <p class="login-link">Já tem uma conta? <a href="">Entrar</a></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+<script>
+    function toggleSenha(input, img) {
+        if (input.type === "password") {
+            input.type = "text";
+            img.src = "imagens/hidden.png";
+        } else {
+            input.type = "password";
+            img.src = "imagens/view.png";  
+        }
+    }
+
+    function criarOlho(input) {
+        let img = document.createElement('img');
+        img.src = "imagens/view.png";
+        img.classList.add('olho_');
+        img.alt = "Mostrar senha";
+        img.onclick = () => toggleSenha(input, img);
+        input.parentNode.appendChild(img);
+    }
+
+    document.querySelectorAll('.input-senha input').forEach(input => {
+        input.addEventListener('input', () => {
+            let olho = input.parentNode.querySelector('.olho_');
+
+            if (input.value.length > 0) {
+                if (!olho) {
+                    criarOlho(input);
+                } else {
+                    olho.classList.add('show');
+                }
+            } else if (olho) {
+                olho.classList.remove('show');
+                setTimeout(() => olho.remove(), 300); 
+            }
+        });
+    });
+
+    function mostrarSenha(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
+    }
+</script>
+
+
+</body>
+
+</html>
